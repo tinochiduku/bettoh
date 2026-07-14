@@ -1,0 +1,106 @@
+/*
+  Bettohtech theme support styles.
+  Import this once — e.g. in your root layout.tsx:
+    import "@/styles/bettohtech-theme.css";
+
+  Tailwind utility classes (bg-[#ed1c24] etc.) handle colour directly, so this
+  file only carries what Tailwind can't express cleanly: the angled "panel-cut"
+  signature shape, the marquee keyframes, and reduced-motion guards.
+*/
+
+:root {
+  --bt-ink: #100f0d;
+  --bt-charcoal: #1c1b1a;
+  --bt-red: #ed1c24;
+  --bt-red-dark: #b3131a;
+  --bt-steel: #646362;
+  --bt-steel-light: #abaaaa;
+  --bt-paper: #fafaf9;
+  --bt-line: #e5e4e2;
+}
+
+/* Signature angled-corner cut, echoing the pylon sign's cut top edge.
+   Apply to cards, panels, section dividers. */
+.bt-cut-tr {
+  clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%);
+}
+.bt-cut-tl {
+  clip-path: polygon(28px 0, 100% 0, 100% 100%, 0 100%, 0 28px);
+}
+.bt-cut-br {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 28px), calc(100% - 28px) 100%, 0 100%);
+}
+.bt-cut-both {
+  clip-path: polygon(
+    0 0,
+    calc(100% - 28px) 0,
+    100% 28px,
+    100% 100%,
+    28px 100%,
+    0 calc(100% - 28px)
+  );
+}
+
+@media (min-width: 768px) {
+  .bt-cut-tr,
+  .bt-cut-tl,
+  .bt-cut-br {
+    clip-path: polygon(0 0, calc(100% - 44px) 0, 100% 44px, 100% 100%, 0 100%);
+  }
+  .bt-cut-tl {
+    clip-path: polygon(44px 0, 100% 0, 100% 100%, 0 100%, 0 44px);
+  }
+  .bt-cut-br {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 44px), calc(100% - 44px) 100%, 0 100%);
+  }
+  .bt-cut-both {
+    clip-path: polygon(
+      0 0,
+      calc(100% - 44px) 0,
+      100% 44px,
+      100% 100%,
+      44px 100%,
+      0 calc(100% - 44px)
+    );
+  }
+}
+
+/* Marquee ticker */
+.bt-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: bt-marquee 32s linear infinite;
+}
+@keyframes bt-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Bolt "power on" draw-in, used once on hero load */
+.bt-bolt-draw path {
+  stroke-dasharray: 1400;
+  stroke-dashoffset: 1400;
+  animation: bt-draw 1.1s ease-out forwards;
+}
+@keyframes bt-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bt-marquee-track {
+    animation: none;
+  }
+  .bt-bolt-draw path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  * {
+    scroll-behavior: auto !important;
+  }
+}
